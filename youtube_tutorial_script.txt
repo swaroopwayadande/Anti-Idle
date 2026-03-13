@@ -1,0 +1,79 @@
+=========================================================
+YOUTUBE TUTORIAL SCRIPT: How to Prevent PC from Sleeping!
+=========================================================
+
+[INTRO]
+Hey everyone! Welcome back to the channel. Today, I'm going to show you how to write a simple Python script that will stop your computer from going to sleep or showing as "Away" on apps like Teams or Slack. It works by simulating tiny, invisible mouse movements and occasional keyboard presses. 
+
+Let's get started!
+
+[STEP 1: FOLDER & ENVIRONMENT SETUP]
+First, create a new folder for your project and open your terminal or command prompt there.
+We want to keep things clean, so we'll create a Virtual Environment.
+
+Command to run:
+python -m venv venv
+
+Once that's done, activate it:
+Windows: .\venv\Scripts\activate
+Mac/Linux: source venv/bin/activate
+
+[STEP 2: INSTALLING DEPENDENCIES]
+With our virtual environment active, we need to install a library called "pyautogui", which lets Python control our mouse and keyboard.
+
+Command to run:
+pip install pyautogui
+
+[STEP 3: THE CODE & EXPLANATION]
+Create a new file called `anti_idle.py` and open it in your code editor. Here is our complete code. Let's break it down line-by-line:
+
+--- THE CODE ---
+import pyautogui
+import time
+import random
+
+def prevent_idle():
+    print("Anti-idle script started. Press Ctrl+C in the terminal to stop.")
+    try:
+        while True:
+            wait_time = random.randint(30, 90)
+            time.sleep(wait_time)
+            
+            x_offset = random.randint(-5, 5)
+            y_offset = random.randint(-5, 5)
+            pyautogui.move(x_offset, y_offset, duration=0.5)
+            
+            if random.random() < 0.3:
+                key_to_press = random.choice(['shiftleft', 'ctrlleft'])
+                pyautogui.press(key_to_press)
+                
+    except KeyboardInterrupt:
+        print("\nScript stopped.")
+
+if __name__ == "__main__":
+    pyautogui.FAILSAFE = True
+    prevent_idle()
+
+--- LINE-BY-LINE EXPLANATION ---
+1. `import pyautogui` - Imports the library that controls the mouse and keyboard.
+2. `import time` - Allows us to pause the script using timers.
+3. `import random` - Lets us generate random numbers so the movements look natural and human.
+4. `def prevent_idle():` - Defines our main function that will do all the work.
+5. `print(...)` - Just prints a message to the terminal so we know the script is running.
+6. `try:` and `except KeyboardInterrupt:` - This block safely catches when we press "Ctrl+C" in the terminal so the program exits cleanly without errors.
+7. `while True:` - Creates an infinite loop so the script runs forever until we stop it manually.
+8. `wait_time = random.randint(30, 90)` - Picks a random number between 30 and 90 seconds. 
+9. `time.sleep(wait_time)` - Tells Python to pause and do nothing for that randomly chosen amount of seconds.
+10. `x_offset = ...` and `y_offset = ...` - Picks a random number of pixels between -5 and 5. This is how far the mouse will move left/right (x) and up/down (y).
+11. `pyautogui.move(x_offset, y_offset, duration=0.5)` - Moves the mouse by the random pixels we just chose, over a smooth 0.5-second duration so it's not a sudden teleport.
+12. `if random.random() < 0.3:` - This creates a 30% chance for the next block of code to happen.
+13. `key_to_press = random.choice(['shiftleft', 'ctrlleft'])` - Randomly picks either the Left Shift or Left Control key. We use these because they are harmless and won't type random letters.
+14. `pyautogui.press(key_to_press)` - Virtually presses the chosen key.
+15. `if __name__ == "__main__":` - The standard Python way to say "Start the program here".
+16. `pyautogui.FAILSAFE = True` - VERY IMPORTANT feature! If your mouse goes crazy, violently moving your physical mouse to any corner of your screen will crash the script and give you back control.
+17. `prevent_idle()` - Calls the function we built to start the infinite loop.
+
+[OUTRO]
+To run it, just type `python anti_idle.py` in your terminal! 
+If this video helped you, make sure to like and subscribe for more coding tutorials!
+=========================================================
