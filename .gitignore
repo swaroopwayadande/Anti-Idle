@@ -1,0 +1,4 @@
+venv/
+youtube_tutorial_script.txt
+__pycache__/
+*.pyc
